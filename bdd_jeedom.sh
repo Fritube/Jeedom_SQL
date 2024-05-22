@@ -31,8 +31,11 @@ if [ ! -f "$MARIA_CONF" ]; then
   exit 1
 fi
 line_number=30
+nouvelle_ligne="bind-interface = 0.0.0.0"
 echo "Modification du fichier de configuration $MARIA_CONF..."
 sed -i "${line_number}d" "$MARIA_CONF"
+# Ajouter la nouvelle ligne à l'emplacement spécifié
+sed -i "${line_number}i$nouvelle_ligne" "$MARIA_CONF"
 
 # Vérifier si la modification a réussi
 if [ $? -eq 0 ]; then
