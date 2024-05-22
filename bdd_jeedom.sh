@@ -65,3 +65,5 @@ while [ $DECISION -eq 1 ]; do
         DECISION=0
     fi
 done
+systemctl restart mysql
+echo "Fin du script"
