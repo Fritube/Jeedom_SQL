@@ -45,16 +45,20 @@ fi
 #Modification de l'autorisation des ports
 PORT=3306
 DECISION=1
-# Demander à l'utilisateur son ip
-while [$DECISION==1]
-do
-    echo "Bonjour ! Quel est l'adresse IP sur laquelle vous voulez installer l'IHM ? (Celle-ci doit être fixe et dans votre LAN)"
+while [ $DECISION -eq 1 ]; do
+    # Demander à l'utilisateur une adresse IP
+    echo "Bonjour ! Quelle est l'adresse IP sur laquelle vous voulez installer l'IHM ? (Celle-ci doit être fixe et dans votre LAN)"
     read ip
-    ufw allow from $ip to any port $PORT
-    echo "Avez-vous d'autre adresse ip à ajouter ? Y/N"
+    
+    # Autoriser l'accès depuis l'adresse IP spécifiée au port spécifié
+    ufw allow from "$ip" to any port "$PORT"
+    
+    # Demander si l'utilisateur veut ajouter une autre adresse IP
+    echo "Avez-vous une autre adresse IP à ajouter ? (Y/N)"
     read dec
-    if [$dec=='N']; 
-    then
-        $DECISION=0
+    
+    # Vérifier la réponse de l'utilisateur
+    if [ "$dec" == "N" ]; then
+        DECISION=0
     fi
 done
