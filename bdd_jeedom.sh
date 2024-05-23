@@ -29,7 +29,7 @@ else
 fi
 
 # Vérifier si phpmyadmin est déjà installé
-if [ -x "$(command -v phpmyadmin)" ]; then
+if [ -d "/usr/share/phpmyadmin" ]; then
   echo "phpmyadmin est déjà installé sur ce système."
 else
     # Installation de ufw
