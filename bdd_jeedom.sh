@@ -98,7 +98,7 @@ while [ $DECISION -eq 1 ]; do
     ufw allow from "$ip" to any port "$PORT"
 
     mysql -u root --password="$mdp_php" <<EOF
-GRANT ALL PRIVILEGES ON *.* TO '$user'@'$ip' IDENTIFIED BY '$mdp' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON jeedom.* TO '$user'@'$ip' IDENTIFIED BY '$mdp' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 EOF
     
