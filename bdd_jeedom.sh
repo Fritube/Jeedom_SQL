@@ -69,19 +69,18 @@ while [ $DECISION -eq 1 ]; do
     # Autoriser l'accès depuis l'adresse IP spécifiée au port spécifié
     ufw allow from "$ip" to any port "$PORT"
 
-    mysql -u root
-    echo -e "GRANT ALL PRIVILEGES ON jeedom.* TO '$user'@'$ip' IDENTIFIED BY '$mdp' WITH GRANT OPTION;"
-    echo -e "FLUSH PRIVILEGES;"
-    echo -e "EXIT;"
+    mysql -u root <<EOF
+GRANT ALL PRIVILEGES ON jeedom.* TO '$user'@'$ip' IDENTIFIED BY '$mdp' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+EXIT;
+EOF
     
     # Demander si l'utilisateur veut ajouter une autre adresse IP
     echo "Avez-vous une autre adresse IP à ajouter ? (Y/N)"
     read dec
     
     # Vérifier la réponse de l'utilisateur
-    if [ "$dec" == "N" ]; then
+    if [ "$dec" == "N" || "$dec" == "n" ]; then
         DECISION=0
     fi
 done
-
-echo "Script fini"
