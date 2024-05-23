@@ -11,7 +11,12 @@ if [ -x "$(command -v ufw)" ]; then
   echo "UFW est déjà installé sur ce système."
 else
     # Installation de ufw
-    echo "Installation du paquet UFW..."
+    echo "Voulez-vous installer le paquet UFW... Y/N"
+    read rep
+    # Vérifier la réponse de l'utilisateur
+    if [[ "$rep" == "N" || "$rep" == "n" ]]; then
+        exit 1
+    fi
     apt-get update
     apt-get install -y ufw
     # Vérifier si l'installation a réussi
@@ -28,7 +33,13 @@ if [ -x "$(command -v phpmyadmin)" ]; then
   echo "phpmyadmin est déjà installé sur ce système."
 else
     # Installation de ufw
-    echo "Installation du paquet phpmyadmin... (Retenez bien le mdp pour l'utilisateur root de phpmyadmin)"
+    echo "----------------------------------------------------------------"
+    echo "Voulez-vous installer le paquet phpmyadmin... Y/N (Retenez bien le mdp pour l'utilisateur root de phpmyadmin et choisissez apache2 lorsque cela vous ai proposé)"
+    read rep
+    # Vérifier la réponse de l'utilisateur
+    if [[ "$rep" == "N" || "$rep" == "n" ]]; then
+        exit 1
+    fi
     apt-get update
     apt-get install -y phpmyadmin
     # Vérifier si l'installation a réussi
@@ -64,7 +75,7 @@ fi
 
 systemctl restart mariadb
 systemctl restart mysql
-
+echo "----------------------------------------------------------------"
 echo "Quel est le mot de passe de l'utilisateur root de phpmyadmin ?"
 read -s mdp_php
 
