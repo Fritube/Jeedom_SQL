@@ -75,6 +75,7 @@ fi
 
 systemctl restart mariadb
 systemctl restart mysql
+systemctl restart apache2
 echo "----------------------------------------------------------------"
 echo "Quel est le mot de passe de l'utilisateur root de phpmyadmin ?"
 read -s mdp_php
