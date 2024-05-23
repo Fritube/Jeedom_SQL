@@ -79,7 +79,7 @@ EOF
     read dec
     
     # Vérifier la réponse de l'utilisateur
-    if [ "$dec" == "N" || "$dec" == "n" ]; then
+    if [[ "$dec" == "N" || "$dec" == "n" ]]; then
         DECISION=0
     fi
 done
