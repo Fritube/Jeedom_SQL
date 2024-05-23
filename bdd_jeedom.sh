@@ -45,6 +45,13 @@ else
   exit 1
 fi
 
+#Supprimer le mdp root de mysql/mariadb
+echo "Arrêt de MySQL..."
+systemctl stop mysql
+mysqld_safe --skip-grant-tables &
+echo "Redémarrage de MySQL..."
+systemctl start mysql
+
 #Modification de l'autorisation des ports
 PORT=3306
 DECISION=1
@@ -53,8 +60,19 @@ while [ $DECISION -eq 1 ]; do
     echo "Bonjour ! Quelle est l'adresse IP sur laquelle vous voulez installer l'IHM ? (Celle-ci doit être fixe et dans votre LAN)"
     read ip
     
+    echo "Quel nom d'utilisateur souhaitez-vous utiliser ?"
+    read user
+
+    echo "Quel mot de passe voulez-vous utiliser pour cet utilisateur ?"
+    read -s mdp #-s permet que le mdp soit caché
+
     # Autoriser l'accès depuis l'adresse IP spécifiée au port spécifié
     ufw allow from "$ip" to any port "$PORT"
+
+    mysql -u root
+    echo -e "GRANT ALL PRIVILEGES ON jeedom.* TO '$user'@'$ip' IDENTIFIED BY '$mdp' WITH GRANT OPTION;"
+    echo -e "FLUSH PRIVILEGES;"
+    echo -e "EXIT;"
     
     # Demander si l'utilisateur veut ajouter une autre adresse IP
     echo "Avez-vous une autre adresse IP à ajouter ? (Y/N)"
@@ -65,5 +83,5 @@ while [ $DECISION -eq 1 ]; do
         DECISION=0
     fi
 done
-systemctl restart mysql
-echo "Fin du script"
+
+echo "Script fini"
