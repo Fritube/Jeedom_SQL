@@ -97,7 +97,7 @@ while [ $DECISION -eq 1 ]; do
     # Autoriser l'accès depuis l'adresse IP spécifiée au port spécifié
     ufw allow from "$ip" to any port "$PORT"
 
-    mysql -u root --password="$mdp_php" <<EOF
+    mysql -u root <<EOF
 GRANT ALL PRIVILEGES ON jeedom.* TO '$user'@'$ip' IDENTIFIED BY '$mdp' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 EOF
