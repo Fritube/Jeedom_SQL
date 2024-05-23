@@ -72,7 +72,6 @@ while [ $DECISION -eq 1 ]; do
     mysql -u root <<EOF
 GRANT ALL PRIVILEGES ON jeedom.* TO '$user'@'$ip' IDENTIFIED BY '$mdp' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
-EXIT;
 EOF
     
     # Demander si l'utilisateur veut ajouter une autre adresse IP
@@ -84,3 +83,6 @@ EOF
         DECISION=0
     fi
 done
+cd ..
+rm -rf Jeedom_SQL
+echo "Configuration terminée"
